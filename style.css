@@ -1,0 +1,36 @@
+body {
+    background-color: #121212;
+    color: white;
+    font-family: 'Inter', sans-serif;
+}
+
+.title{
+    color: #1ED760;
+    font-size: 2.5rem;
+}
+
+img
+{
+    width: 150px;
+}
+
+.info-section h2
+{
+    font-size: 1.8rem;
+    color: white;
+}
+
+.info-section p
+{
+    color: #b3b3b3;
+}
+
+.info-section li
+{
+    color: #b3b3b3;
+}
+
+.info-section ul
+{
+    list-style: none;
+}
