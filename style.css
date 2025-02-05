@@ -1,7 +1,24 @@
+* {
+    font-family: 'Inter', sans-serif;
+}
 body {
     background-color: #121212;
     color: white;
     font-family: 'Inter', sans-serif;
+    max-width: 1200px;
+    width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+header{
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #282828;
 }
 
 .title{
@@ -12,12 +29,20 @@ body {
 img
 {
     width: 150px;
+
+}
+
+.info-section{
+    border-radius: 10px;
+    background-color: #1E1E1E;
+    padding: 20px;
 }
 
 .info-section h2
 {
     font-size: 1.8rem;
     color: white;
+    margin-top: 0;
 }
 
 .info-section p
@@ -33,4 +58,76 @@ img
 .info-section ul
 {
     list-style: none;
+    padding-left: 0;
+    margin-left: 0;
 }
+
+.result-section
+{
+    background-color: #1E1E1E;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 40px;
+    margin-top: 40px;
+}
+
+#result-container
+{
+    text-align: center;
+}
+
+.result-section h2
+{
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.spotify-button, .result-button
+{
+    background-color: black;
+    color: #1ED760;
+    font-size: 1rem;
+
+    padding: 12px 24px;
+    border: none;
+    border-radius: 25px;
+    margin-bottom: 10px;
+}
+
+.result-card
+{
+    background-color: #282828;
+    color: white;
+
+    padding: 30px;
+    border-radius: 10px;
+}
+
+.result-intro-text
+{
+    font-size: 1rem;
+    font-weight: 300;
+    margin-bottom: 10px;
+}
+
+.social-links
+{
+    background-color: #1E1E1E;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    
+}
+
+.social-links ul
+{
+    display: flex;
+    align-items: center;
+    list-style: none;
+    gap: 20px;
+    
+    
+}
+
