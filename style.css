@@ -4,10 +4,9 @@
 body {
     background-color: #121212;
     color: white;
-    font-family: 'Inter', sans-serif;
     max-width: 1200px;
-    width: 90%;
-    margin: 0 auto;
+    width: 80%;
+    margin: 20px auto;
     padding: 20px;
 }
 
@@ -17,13 +16,14 @@ header{
     align-items: center;
     justify-content: space-between;
     margin-bottom: 30px;
-    padding-bottom: 10px;
+    padding-bottom: 20px;
     border-bottom: 1px solid #282828;
 }
 
 .title{
     color: #1ED760;
     font-size: 2.5rem;
+    margin-bottom: 0;
 }
 
 img
@@ -32,43 +32,62 @@ img
 
 }
 
-.info-section{
+.info-section, .result-section{
+    margin-bottom: 40px;
     border-radius: 10px;
+    margin-top: 40px;
     background-color: #1E1E1E;
     padding: 20px;
 }
 
-.info-section h2
+.info-section h2, .result-section h2
 {
     font-size: 1.8rem;
     color: white;
     margin-top: 0;
+    margin-bottom: 15px;
 }
 
 .info-section p
 {
     color: #b3b3b3;
+    font-size: 1rem;
+    line-height: 1.6;
 }
 
-.info-section li
+.right-container li
 {
     color: #b3b3b3;
+    margin-bottom: 8px;
 }
 
-.info-section ul
+.right-container ul
 {
     list-style: none;
     padding-left: 0;
     margin-left: 0;
 }
 
-.result-section
+.spotify-button, .result-button, select.spotify-button
 {
-    background-color: #1E1E1E;
-    padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 40px;
-    margin-top: 40px;
+    background-color: black;
+    color: #1ED760;
+    font-size: 1rem;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 25px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+.spotify-button:hover, select.spotify-button:hover
+{
+    background-color: #1ED760;
+    color: black;
 }
 
 #result-container
@@ -76,58 +95,57 @@ img
     text-align: center;
 }
 
-.result-section h2
+#result
 {
-    margin-top: 0;
-    margin-bottom: 15px;
-}
-
-.spotify-button, .result-button
-{
-    background-color: black;
-    color: #1ED760;
-    font-size: 1rem;
-
-    padding: 12px 24px;
-    border: none;
-    border-radius: 25px;
-    margin-bottom: 10px;
+    color: white;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
 }
 
 .result-card
 {
     background-color: #282828;
     color: white;
-
     padding: 30px;
     border-radius: 10px;
 }
 
 .result-intro-text
 {
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-weight: 300;
     margin-bottom: 10px;
 }
 
-.social-links
+footer
 {
     background-color: #1E1E1E;
-    padding: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-    
+    padding: 20px;
+    border-top: 1px solid #282828;
+    margin-top: 40px;
 }
 
-.social-links ul
+.social-links
 {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    text-align: center;
     display: flex;
-    align-items: center;
-    list-style: none;
-    gap: 20px;
-    
-    
+    justify-content: center;
+    gap: 30px;
+    font-size: 0.9rem;
+}
+
+.social-links li a
+{
+    color: #B3B3B3;
+    text-decoration: none;
+    transition: color 0.3s ease;   
+}
+
+.social-links li a:hover
+{
+    color: white;
 }
 
