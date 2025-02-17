@@ -16,7 +16,17 @@ let currentAccessToken = null;
 app.use(express.json());
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+//update CORS configuration
+app.use(cors({
+    origin: [
+        'http://localhost:3000',
+        'spotify-viz.netlify.app'
+    ],
+    methods: ['GET', 'POST'],
+    Credential: true
+}));
+
+
 
 //handle artist search
 app.get('/api/search/artist', async (req, res) => {
