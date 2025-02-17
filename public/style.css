@@ -236,3 +236,25 @@ footer
     color: gray;
 }
 
+#submit-button
+{
+    background-color: black;
+    color: #1ED760;
+    font-size: 1rem;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 25px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+}
+
+#submit-button:hover
+{
+    background-color: #1ED760;
+    color: black;
+}
+

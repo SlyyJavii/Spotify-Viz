@@ -1,8 +1,5 @@
 import {songList} from './spotify_top_hits_clean.js';
 
-//API
-const API_KEY = "BQDFXkdYo71A2c0SDA8AO8ap0MzbyhR5mwVG55M8M3auKP9UDaaSZlUj_2U7_8PeZ91q-GFiN4YuVkOCaMGpddGpso5LI-99wZQ-Gjbz98OdO-hOMGCckh2NSvbRGjl2dMKp5CbNH90";
-
 function showForm(){
     const resultCard = document.getElementById('result-card')
     resultCard.innerHTML = ''
@@ -24,120 +21,47 @@ function showForm(){
 const handleSubmit = async (event) => {
     event.preventDefault()
 
-    const inputForm = document.getElementById('artist-input')
-    const artistRequested = inputForm.value
+    const artistInput = document.getElementById('artist-input');
+    const artistName = artistInput.value.trim();
 
-    const artists = await searchArtists(artistRequested)
-    displayArtistsCards(artists)
-}
+    if(!artistName){
+        alert('Please enter an artist name');
+        return;
+    }
 
-function displayAlbums(albumDetails) { //displays the found albums to the screen
-    const resultCard = document.getElementById('result-card')
-    resultCard.innerHTML = ''
-    showForm()
-    
-    console.log("Album details : ", albumDetails)
-    
-    const cardsContainer = document.createElement('div')
-    albumDetails.forEach((album) => {
-        const card = document.createElement('div')
-        card.innerHTML = 
-            `
-            <div class="card-container">
-                <div class="detail-container">
-                    <div class="img-container">
-                        <img src=${album.image ? album.image : 'https://storage.googleapis.com/pr-newsroom-wp/1/2023/05/Spotify_Primary_Logo_RGB_Green.png'} alt=${album.name}/>
-                    </div>
-                    <div class="info-container">
-                        <h4>
-                            ${album.name}
-                        </h4>
-                        <div>
-                            <span>${album.numTracks} Tracks ◆ </span>
-                            <span> Released ${album.released} ◆ </span>
-                            <span>${album.type}</span>
-                        </div>
-                    </div>
-                </div>
-            <h6 class="visit-link"><a href=${album.link}>Visit Album</a></h6>
-            </div>
-                `
-        card.addEventListener('click', () => {handleAlbumClick(album)})
-        cardsContainer.appendChild(card)
-    })
-        
-    resultCard.append(cardsContainer)
-}
+    try{
+        console.log('Searching for artist:', artistName);
+        const artists = await searchArtists(artistName);
 
-function displayTracks(trackDetails, image) { //displays the tracks of a selected album
-    const resultCard = document.getElementById('result-card')
-    resultCard.innerHTML = ''
-    showForm()
-    
-    console.log("Track details : ", trackDetails)
-    
-    const cardsContainer = document.createElement('div')
-    trackDetails.forEach((track) => {
-        const card = document.createElement('div')
-        card.innerHTML = 
-        `
-            <div class="card-container">
-                <div class="detail-container">
-                    <div class="img-container">
-                        <img src=${image ? image : 'https://storage.googleapis.com/pr-newsroom-wp/1/2023/05/Spotify_Primary_Logo_RGB_Green.png'} alt=${track.name}/>
-                    </div>
-                    <div class="info-container">
-                        <h4>
-                        ${track.name}
-                        </h4>
-                        <div>
-                            <span>${Math.floor(track.duration / 60000)} minutes ◆ </span>
-                            <span>${track.artists.map((artist) => (" " + artist.name))}</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="button-container">
-                    <h6 class="visit-link" style="text-align:center"><a href=${track.link}>Visit Song</a></h6>
-                    <button class="visit-link add-btn" id="add-button">Add Song to Dataset</button>
-                </div>
-            </div>
-                    `
-            const addButton = card.getElementsByClassName('add-btn').item(0)
-            addButton.addEventListener('click', () => {addTrackToData(track.id)})
-            cardsContainer.appendChild(card)
-        })
-        
-        resultCard.append(cardsContainer)
+        if(artists.length === 0){
+            alert('No artists found');
+        }else {
+            displayArtistsCards(artists);
+        }
+    }catch(error){
+        console.error('Error searching for artist:', error);
+        alert('Failed to search for artist');
+    }
 }
 
 async function searchArtists(artist) {//search for an artist using sporitfy API
-    const requestURL = `https://api.spotify.com/v1/search?q=${artist}&type=artist&limit=5&offset=0`
-    const details = {
-        method: "GET",
-        headers: {
-            Authorization: `Bearer ${API_KEY}`
+    const requestURL = `http://localhost:3000/api/search/artist?artist=${encodeURIComponent(artist)}`;
+
+    try{
+        const response = await fetch(requestURL)
+        if(!response.ok){
+            throw new Error(`HTTP error! status: ${response.status}`);
         }
-    }
+        const artists = await response.json();
+        console.log(artists);
 
-    const result = await fetch(requestURL, details)
-    const json = await result.json()
-    console.log(json)
-
-    const retrievedArtists = json.artists.items
-    const cleanedArtistData = retrievedArtists.map((artist) => (
-        {
-            id: artist.id,
-            name: artist.name,
-            link: artist.external_urls.spotify,
-            followers: artist.followers.total,
-            popularity: artist.popularity,
-            genre: artist.genres.join(", "),
-            image: (artist.images.length > 0 ? artist.images[0].url : '')
-        }
-    ))
-
-    return cleanedArtistData
+        return artists;
+    }catch (error){
+        console.error('Error searching for artist:', error);
+        throw error;
+    } 
 }
+
 
 function displayArtistsCards(artistDetails) {//displays the artists found to the screen
 
@@ -149,34 +73,37 @@ function displayArtistsCards(artistDetails) {//displays the artists found to the
 
     const cardsContainer = document.createElement('div')
     artistDetails.forEach((artist) => {
+
+        const followers = artist.followers.total;
+        const formattedFollowers = followers.toLocaleString();
         const card = document.createElement('div')
         card.innerHTML = 
             `
             <div class="card-container">
             <div class="detail-container">
                 <div class="img-container">
-                    <img src=${artist.image ? artist.image : 'https://storage.googleapis.com/pr-newsroom-wp/1/2023/05/Spotify_Primary_Logo_RGB_Green.png'} alt=${artist.name}/>
+                    <img src=${artist.images.length > 0 ? artist.images[0].url : 'https://storage.googleapis.com/pr-newsroom-wp/1/2023/05/Spotify_Primary_Logo_RGB_Green.png'} alt=${artist.name}/>
                 </div>
                 <div class="info-container">
                     <h4>
                         ${artist.name}
                     </h4>
                     <div>
-                        <span>${artist.genre} ◆ </span>
-                        <span>${artist.followers} Followers ◆ </span>
+                        <span>${artist.genres && artist.genres.length > 0 ? artist.genres.join(', ') : 'No genre available'} ◆ </span>
+                        <span>${formattedFollowers} Followers ◆ </span>
                         <span>Popularity ${artist.popularity}</span>
                     </div>
                 </div>
             </div>
-            <h6 class="visit-link"><a href=${artist.link}>Visit Artist</a></h6>
+            <h6 class="visit-link"><a href="${artist.external_urls.spotify}" target="_blank">Visit Artist</a></h6>
             </div>
-            `
+            `;
             
             //card.addEventListener('click', () => {handleArtistClick(artist.id)})
-            cardsContainer.appendChild(card)
-        })
+            cardsContainer.appendChild(card);
+        });
         
-        resultCard.append(cardsContainer)
+        resultCard.append(cardsContainer);
 }
 
 
