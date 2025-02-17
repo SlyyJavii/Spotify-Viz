@@ -20,7 +20,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors({
     origin: [
         'http://localhost:3000',
-        'spotify-viz.netlify.app'
+        'https://spotify-viz.netlify.app'
     ],
     methods: ['GET', 'POST'],
     Credential: true
