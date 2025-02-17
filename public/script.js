@@ -45,7 +45,7 @@ const handleSubmit = async (event) => {
 }
 
 async function searchArtists(artist) {//search for an artist using sporitfy API
-    const requestURL = `http://localhost:3000/api/search/artist?artist=${encodeURIComponent(artist)}`;
+    const requestURL = `https://spotify-viz-n08w.onrender.com/api/search/artist?artist=${encodeURIComponent(artist)}`;
 
     try{
         const response = await fetch(requestURL)
