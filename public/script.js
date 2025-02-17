@@ -1,5 +1,10 @@
 import {songList} from './spotify_top_hits_clean.js';
 
+const isDevelopment = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+const API_URL = isDevelopment 
+    ? 'http://localhost:3000'
+    : 'https://spotify-viz-n08w.onrender.com';
+
 function showForm(){
     const resultCard = document.getElementById('result-card')
     resultCard.innerHTML = ''
@@ -45,7 +50,7 @@ const handleSubmit = async (event) => {
 }
 
 async function searchArtists(artist) {//search for an artist using sporitfy API
-    const requestURL = `https://spotify-viz-n08w.onrender.com/api/search/artist?artist=${encodeURIComponent(artist)}`;
+    const requestURL = `${API_URL}/api/search/artist?artist=${encodeURIComponent(artist)}`;
 
     try{
         const response = await fetch(requestURL)
